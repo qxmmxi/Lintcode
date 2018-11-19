@@ -51,7 +51,7 @@ O(log N) time
     }
     
 ### Solution2:
-  public long trailingZeros(long n) {
+    public long trailingZeros(long n) {
        long count = 0;
        while(n > 0){
            n = n/5;
