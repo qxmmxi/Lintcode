@@ -61,7 +61,7 @@ O(log N) time
     }
     
     
-## 1. Digit Counts
+## 3. Digit Counts
 
 Description
 Count the number of k's between 0 and n. k can be 0 - 9.
@@ -85,3 +85,21 @@ we have FIVE 1's (1, 10, 11, 12)
         return count;
     }
 
+### Solution2:
+    public int digitCounts(int k, int n) {
+        int res=0;
+        for(int i=k;i<=n;i++){
+            int temp=i;
+            while(true){
+                if(temp%10==k){
+                    res++;
+                }
+                if(temp>=10){
+                    temp=temp/10;
+                }else{
+                    break;
+                }
+            }
+        }
+        return res;
+    }
