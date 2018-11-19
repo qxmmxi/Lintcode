@@ -59,3 +59,29 @@ O(log N) time
        }
        return count;
     }
+    
+    
+## 1. Digit Counts
+
+Description
+Count the number of k's between 0 and n. k can be 0 - 9.
+Example
+if n = 12, k = 1 in
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+we have FIVE 1's (1, 10, 11, 12)
+
+### Solution1:
+    public int digitCounts(int k, int n) {
+        int count = 0;
+        char key = (char)(k + 48);//or add '0'
+        for (int i = k; i <= n;++i){
+          char[] chars = Integer.toString(i).toCharArray();
+          for (char item : chars){
+              if(key == item){
+                  ++count;
+              }
+          }
+        }
+        return count;
+    }
+
