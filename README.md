@@ -103,3 +103,37 @@ we have FIVE 1's (1, 10, 11, 12)
         }
         return res;
     }
+    
+## 4. Ugly Number II
+
+Description
+Ugly number is a number that only have factors 2, 3 and 5.
+Design an algorithm to find the nth ugly number. The first 10 ugly numbers are 1, 2, 3, 4, 5, 6, 8, 9, 10, 12…
+Example
+If n=9, return 10.
+Challenge
+O(n log n) or O(n) time.
+
+    
+### Solution:
+     public int nthUglyNumber(int n) {
+        int[] uglyNumber = new int[n];
+        uglyNumber[0]=1;
+        
+        int index2=0, index3=0, index5=0, index = 1;
+        while(index <= n-1 ){
+        	int minUgly=Math.min(Math.min(uglyNumber[index2]*2, uglyNumber[index3]*3),uglyNumber[index5]*5);
+           	uglyNumber[index]=minUgly;
+        	if(uglyNumber[index2]*2 == minUgly){
+        		++index2;
+        	}
+           	if(uglyNumber[index3]*3 == minUgly){
+        		++index3;
+        	}
+           	if(uglyNumber[index5]*5 == minUgly){
+        		++index5;
+        	}
+           	++ index;
+        }
+        return uglyNumber[index-1];
+    }
