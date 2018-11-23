@@ -238,3 +238,60 @@ running time: Avg O(N) Worst O(N^2)     memory:O(1)
            nums[index1]= nums[index2];
            nums[index2]=temp;
       }
+      
+      
+## 6. Merge Two Sorted Arrays
+
+Description
+Merge two given sorted integer array A and B into a new sorted integer array.
+Example
+A=[1,2,3,4]
+B=[2,4,5,6]
+return [1,2,2,3,4,4,5,6]
+Challenge
+How can you optimize your algorithm if one array is very large and the other is very small?
+
+### Solution
+      
+       public int[] mergeSortedArray(int[] a, int[] b) {
+          int indexa=a.length-1,indexb=b.length-1,index=a.length+b.length-1;
+          int[] newArray=new int[a.length+b.length];
+          while(indexa>=0 && indexb>=0){
+               if(a[indexa]>b[indexb]){
+                    newArray[index--]=a[indexa--];
+               }else{
+                    newArray[index--]=b[indexb--];
+               }
+          }
+          while(indexa>=0){
+               newArray[index--]=a[indexa--];
+          }
+
+          while(indexb>=0){
+               newArray[index--]=b[indexb--];
+          }
+          return newArray;
+    }
+
+or
+
+     public int[] mergeSortedArray(int[] a, int[] b) {
+        int indexa=0,indexb=0,index=0;
+          int[] newArray=new int[a.length+b.length];
+          while(indexa<a.length && indexb<b.length){
+               if(a[indexa]<b[indexb]){
+                    newArray[index++]=a[indexa++];
+               }else{
+                    newArray[index++]=b[indexb++];
+               }
+          }
+          while(indexa<a.length){
+               newArray[index++]=a[indexa++];
+          }
+
+          while(indexb<b.length){
+               newArray[index++]=b[indexb++];
+          }
+          return newArray;
+    }
+
