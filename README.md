@@ -294,4 +294,125 @@ or
           }
           return newArray;
     }
+    
+    
+## 7. Serialize and Deserialize Binary Tree
+
+Description
+Design an algorithm and write code to serialize and deserialize a binary tree. Writing the tree to a file is called 'serialization' and reading back from the file to reconstruct the exact same binary tree is 'deserialization’.
+
+Example
+An example of testdata: Binary tree {3,9,20,#,#,15,7}, denote the following structure:
+  3
+ / \
+9  20
+  /  \
+ 15   7
+Our data serialization use bfs traversal. This is just for when you got wrong answer and want to debug the input.
+
+You can use other method to do serializaiton and deserialization.
+
+    
+### Solution
+
+    import java.util.StringTokenizer;
+
+    public class main {
+
+	   public static void main(String[] args) {
+		   TreeNode rootNode = new TreeNode(1);
+		   TreeNode leftNode = new TreeNode(2);
+		   TreeNode rightNode = new TreeNode(3);
+		 
+		   TreeNode node1 = new TreeNode(4);
+		   TreeNode node1Left = new TreeNode(5);
+		   TreeNode node1Right = new TreeNode(6);
+		   node1.left=node1Left;
+		   node1.right=node1Right;
+		   TreeNode node2 = new TreeNode(7);
+		   TreeNode node2Left = new TreeNode(8);
+		   TreeNode node2Right = new TreeNode(9);
+		   node2.left=node2Left;
+		   node2.right=node2Right;
+		   TreeNode node3 = new TreeNode(10);
+		   TreeNode node3Left = new TreeNode(11);
+		   TreeNode node3Right = new TreeNode(12);
+		   node3.left=node3Left;
+		   node3.right=node3Right;
+		   
+		   leftNode.left=node1;
+		   leftNode.right=node2;
+		   rightNode.left=node3;
+		   
+		   rootNode.left = leftNode;
+		   rootNode.right = rightNode;
+		   
+		   System.out.println("Node info:");
+		   printNodeInfo(rootNode);
+		   System.out.println();
+		   System.out.println("seralize this node,result:");
+		   System.out.println(serialize(rootNode)+"~~");
+		   System.out.println("deseralize this node string,result:");
+		   TreeNode result = deserialize(serialize(rootNode));
+		   printNodeInfo(result);
+	   }
+	   
+	   public static void  printNodeInfo(TreeNode node){
+		  if(null==node){
+			  System.out.print("#,");
+		  }else{
+			  System.out.print(node.val+",");
+			  printNodeInfo(node.left);
+			  printNodeInfo(node.right);
+		  }
+	   }
+		
+		public static String serialize(TreeNode root){
+			StringBuilder stringBuilder = new StringBuilder();
+			return doSeralizeNumber(root,stringBuilder);
+		}
+		
+		public static String doSeralizeNumber(TreeNode treeNode,StringBuilder stringBuilder){
+			if(treeNode == null){
+				stringBuilder.append("#,");
+			}else{
+			stringBuilder.append(treeNode.val+",");
+			doSeralizeNumber(treeNode.left,stringBuilder);
+			doSeralizeNumber(treeNode.right,stringBuilder);
+			}
+			return stringBuilder.substring(0,stringBuilder.length()-1);
+		}
+		
+		public static TreeNode deserialize(String data){
+			StringTokenizer stringTokenizer = new StringTokenizer(data,",");
+	    	return doDeSeralizeNumber(stringTokenizer);			
+		}
+		
+	    public static TreeNode doDeSeralizeNumber(StringTokenizer stringTokenizer){
+	    	String nextStr = stringTokenizer.nextToken();
+	    	if(nextStr!=null){
+	    		if(!nextStr.equals("#")){
+	    			TreeNode rootNode = new TreeNode(Integer.valueOf(nextStr));
+	    			rootNode.left = doDeSeralizeNumber(stringTokenizer);
+	    			rootNode.right = doDeSeralizeNumber(stringTokenizer);
+	    			return rootNode;
+	    		}else{
+	    			return null;
+	    		}
+	    	}else{
+	    		return null;
+	    	}
+		}
+
+	static class TreeNode{
+		int val;
+		TreeNode left;
+		TreeNode right;
+		TreeNode(int num){
+			this.val = num;
+			this.left=this.right=null;
+		}
+	}
+}
+
 
