@@ -137,3 +137,104 @@ O(n log n) or O(n) time.
         }
         return uglyNumber[index-1];
     }
+    
+## 5. Kth Largest Element
+Description
+Find K-th largest element in an array.
+Example
+In array [9,3,2,4,8], the 3rd largest element is 4.
+In array [1,2,3,4,5], the 1st largest element is 5, 2nd largest element is 4, 3rd largest element is 3 and etc.
+Challenge
+O(n) time, O(1) extra memory.
+
+### Solution 1:
+ Sort Array
+ running time:O(nlogn)    memory:O(1) 
+
+    public int kthLargestElement(int n, int[] nums) {
+     if(n==0||nums==null||nums.length==0)return -1;
+          Arrays.sort(nums);
+          System.out.println(nums.toString());
+          return nums[nums.length-n];
+    }
+### Solution 2:
+Max Heap
+running time:O(N lg K)    memory:O(K) 
+
+    public int kthLargestElement(int n, int[] nums) {
+     if(n==0||nums==null||nums.length==0)return -1;
+          PriorityQueue<Integer> priorityQueque = 
+          new PriorityQueue<Integer>(nums.length,new Comparator<Integer>(){
+               @Override
+               public int compare(Integer o1, Integer o2) {
+                    return o2-o1;//max heap
+               }});
+          for(int item:nums){
+              priorityQueque.add(item);
+          }
+          int i=0;
+          while(i<n-1){
+                System.out.print(priorityQueque.poll()+" ");
+               ++i;
+          }
+          return (int) priorityQueque.poll();
+    }
+### Solution 3:
+Min Heap
+running time:O(N lg K)  memory:O(K) 
+
+    public static int kthLargestElement(int n, int[] nums) {
+	    if(n==0||nums==null||nums.length==0)return -1;
+			PriorityQueue<Integer> priorityQueque = new PriorityQueue<Integer>(nums.length,new Comparator<Integer>(){
+
+				@Override
+				public int compare(Integer o1, Integer o2) {
+					return o1-o2;
+				}});
+			for(int item:nums){
+			    priorityQueque.add(item);
+			}
+			int i=0;
+			while(i<nums.length-n){
+				 System.out.print(priorityQueque.poll()+" ");
+				++i;
+			}
+			return (int) priorityQueque.poll();
+	    }
+        
+### Solution 4:
+Quick Select
+running time: Avg O(N) Worst O(N^2)     memory:O(1) 
+
+    public int kthLargestElement(int n, int[] nums) {
+           if(n==0||nums.length<1){
+                return -1;
+           }
+           return doCompare(nums,0,nums.length-1,nums.length-n+1);
+      }
+      private  int doCompare(int[] nums,int start,int end,int n){
+           int left = start;
+           int right = end;
+           int pivot = end;
+           while(true){
+                while(nums[left]<nums[pivot]&&left<right){
+                     ++left;
+                }
+
+                while(nums[right]>=nums[pivot]&&left<right){
+                     --right;
+                }
+               if(left==right)break;
+               swap(nums,left,right);
+           }
+           swap(nums,left,end);
+           if(left+1==n)return nums[left];
+           else if(left+1<n) return doCompare(nums,left+1,end,n);
+           else return doCompare(nums,start,left-1,n);
+      }
+
+      private void swap( int[] nums,int index1,int index2){
+           int temp = nums[index1];
+           nums[index1]= nums[index2];
+           nums[index2]=temp;
+      }
