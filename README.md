@@ -507,11 +507,11 @@ Can you do it with only one if statement?
 	     result[x5*5-1] =result[x5*5-1]==null?"buzz":result[x5*5-1];
 		  ++x5;
 	     }
-             boolean shouldPrint = i%3!=0&&i%5!=0&&i%15!=0;
-	     while(shouldPrint){
-		 result[i-1]=String.valueOf(i);
-		 shouldPrint=false;
-	      }
+         boolean shouldPrint = i%3!=0&&i%5!=0&&i%15!=0;
+	 while(shouldPrint){
+	      result[i-1]=String.valueOf(i);
+              shouldPrint=false;
 	  }
+	}
 	return Arrays.asList(result);
     }
