@@ -413,6 +413,40 @@ You can use other method to do serializaiton and deserialization.
 			this.left=this.right=null;
 		}
 	}
-}
+    }
+    
+    
+## 8. Rotate String
+Description
+Given a string and an offset, rotate string by offset. (rotate from left to right)
+Example
+Given "abcdefg".
+offset=0 => “abcdefg"
+offset=1 => "gabcdef"
+offset=2 => "fgabcde"
+offset=3 => "efgabcd"
+Challenge
+Rotate in-place with O(1) extra memory.
+
+### Solution
+
+       private  void reverse(char[] str,int start,int end){
+            while(start<end){
+                 char temp = str[start];
+                 str[start]=str[end];
+                 str[end]=temp;
+                 ++start;
+                 --end;
+            }
+       }
+
+       public void rotateString(char[] str,int offset){
+           if (null==str||str.length==0) return;
+           int len = str.length;
+            offset = offset % len;
+            reverse(str,0,len-offset-1);
+            reverse(str,len-offset,len-1);
+            reverse(str,0,len-1);
+       }
 
 
