@@ -449,4 +449,69 @@ Rotate in-place with O(1) extra memory.
             reverse(str,0,len-1);
        }
 
+## 9. Fizz Buzz
+Description
+Given number n. Print number from 1 to n. But:
+when number is divided by 3, print "fizz".
+when number is divided by 5, print "buzz".
+when number is divided by both 3 and 5, print "fizz buzz".
+Example
+If n = 15, you should return:
+[
+  "1", "2", "fizz",
+  "4", "buzz", "fizz",
+  "7", "8", "fizz",
+  "buzz", "11", "fizz",
+  "13", "14", "fizz buzz"
+]
+Challenge
+Can you do it with only one if statement?
 
+
+### Solution 1
+
+    public List<String> fizzBuzz1(int n) {
+      	  List<String> result = new ArrayList<String>();
+		  for(int i=1;i<=n;++i){
+			  boolean shouldFizz=i%3==0,shouldBuzz=i%5==0;
+			  if(shouldFizz && shouldBuzz){
+				  result.add("fizz buzz");
+			  }else if(shouldFizz){
+				  result.add("fizz");
+			  }else if(shouldBuzz){
+				  result.add("buzz");
+			  }else{
+				  result.add(String.valueOf(i));
+			  }
+		  }
+	      return result;
+    }
+
+### Solution 2
+
+    public List<String> fizzBuzz(int n) {
+	 String[] result = new String[n];
+	 int i=0;
+	 int x3=1;
+	 int x5=1;
+	 while(++i<=n){
+	    while(x3*3<=n){  
+		 if((x3*3)%15==0){
+		    result[x3*3-1] ="fizz buzz";
+		 }else{
+		    result[x3*3-1] ="fizz";
+		 }
+	     ++x3;
+	    }
+	 while(x5*5<=n){
+	     result[x5*5-1] =result[x5*5-1]==null?"buzz":result[x5*5-1];
+		  ++x5;
+	     }
+             boolean shouldPrint = i%3!=0&&i%5!=0&&i%15!=0;
+	     while(shouldPrint){
+		 result[i-1]=String.valueOf(i);
+		 shouldPrint=false;
+	      }
+	  }
+	return Arrays.asList(result);
+    }
