@@ -583,6 +583,50 @@ If k1 = 10 and k2 = 22, then your function should return [12, 20, 22].
 			  result.add(root.val);
 		  } 	  
 	   }
-		  
+		
+		
+## 12. Min Stack 
+Description
+Implement a stack with min() function, which will return the smallest number in the stack.
+It should support push, pop and min operation all in O(1) cost.
+
+Example
+push(1)
+pop()   // return 1
+push(2)
+push(3)
+min()   // return 2
+push(1)
+min()   // return 1
+
+### Solution
+
+    public class MinStack{
+           private Stack<Integer> stack;
+           private Stack<Integer> minStack;
+           public MinStack(){
+                stack =new Stack();
+                minStack =new Stack();
+           }
+
+           public void push(int number){
+                stack.push(number);
+                if(minStack.isEmpty()){
+                     minStack.push(number);
+                }else if(minStack.peek()>=number){
+                     minStack.push(number);
+                }
+           }
+
+           public int pop(){
+                if(stack.peek().equals(minStack.peek())) minStack.pop();
+                return stack.pop();
+           }
+
+           public int min(){
+                return minStack.peek();
+           }
+      }
+      
 		  
 		  
