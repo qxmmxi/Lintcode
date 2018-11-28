@@ -555,7 +555,6 @@ Given a binary search tree and a range [k1, k2], return all elements in the give
 
 Example
 If k1 = 10 and k2 = 22, then your function should return [12, 20, 22].
-~
     20
    /  \
   8   22
@@ -563,7 +562,7 @@ If k1 = 10 and k2 = 22, then your function should return [12, 20, 22].
 4   12
 
 
- ### Solution
+### Solution
  
  
          public  List<Integer> searchRange(TreeNode root, int k1, int k2){
