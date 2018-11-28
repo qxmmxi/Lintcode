@@ -515,3 +515,38 @@ Can you do it with only one if statement?
 	}
 	return Arrays.asList(result);
     }
+    
+ ## 10. String Permutation
+ Given a string, find all permutations of it without duplicates.
+ Example
+ Given “abb”, return [“abb”, “bab”, “bba”].
+ Given “aabb”, return [“aabb”, “abab”, “baba”, “bbaa”, “abba”, “baab”].
+ 
+ ### Solution
+ 
+	   public static List<String> permutation(String string){
+		   List<String> result = new ArrayList<String>();
+		   String temp="";
+		   char[] str=string.toCharArray();
+		   boolean[] isUsed=new boolean[str.length];
+		   Arrays.sort(str);
+		   doPermutation(str,temp,result,isUsed);
+		   return result;
+	   }
+			   
+	   public static void doPermutation(char[] str,String temp, List<String> result, boolean[] isUsed){
+		 if(temp.length()==str.length){
+			 result.add(temp);
+			 return;
+		 }
+		   for(int i=0;i<str.length;++i){
+			  if(isUsed[i]==true||i!=0&&isUsed[i-1]==false&&str[i-1]==str[i]){
+				  continue;
+			  }
+			  isUsed[i]=true;
+			  doPermutation(str,temp+str[i],result,isUsed);
+			  isUsed[i]=false;
+		  }
+	   }
+	   
+	   
