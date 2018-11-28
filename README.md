@@ -549,4 +549,37 @@ Can you do it with only one if statement?
 		  }
 	   }
 	   
-	   
+## 11. Search Range in Binary Search Tree
+Description
+Given a binary search tree and a range [k1, k2], return all elements in the given range.
+Example
+If k1 = 10 and k2 = 22, then your function should return [12, 20, 22].
+    20
+   /  \
+  8   22
+ / \
+4   12
+
+ ### Solution
+ 
+        public  List<Integer> searchRange(TreeNode root, int k1, int k2){
+		  List<Integer> result = new ArrayList<Integer>();
+		  doSearchRange(root,k1,k2,result);
+		  return result;
+	  }
+	  
+	  public  void doSearchRange(TreeNode root,int start,int end, List<Integer> result){
+		  if(null==root) return;
+		  if(root.val>start){
+			  doSearchRange(root.left,start,end,result);
+		  }
+		  if(root.val<end){
+			  doSearchRange(root.right,start,end,result);
+		  }
+		  if(root.val>=start&&root.val<=end){
+			  result.add(root.val);
+		  } 	  
+	   }
+		  
+		  
+		  
