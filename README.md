@@ -628,5 +628,50 @@ min()   // return 1
            }
       }
       
+	
+## 13. Implement strStr
+
+Description
+For a given source string and a target string, you should output the first index(from 0) of target string in source string.
+If target does not exist in source, just return -1.
+Have you met this question in a real interview?  Yes
+Problem Correction
+Clarification
+Do I need to implement KMP Algorithm in a real interview?
+Not necessary. When you meet this problem in a real interview, the interviewer may just want to test your basic implementation ability. But make sure you confirm with the interviewer first.
+Example
+If source = "source" and target = "target", return -1.
+If source = "abcdabcdefg" and target = "bcd", return 1.
+Challenge
+O(n2) is acceptable. Can you implement an O(n) algorithm? (hint: KMP)
 		  
-		  
+### Solution
+
+    public  int strStr(String source, String target) {
+          int strLen=source.length();
+          int patternLen=target.length();
+          char[] strChar =source.toCharArray();
+          char[] patternChar =target.toCharArray();
+          int i=0,j=0;
+
+          if(patternLen==0||patternLen==0&&strLen==0)return 0;
+          else if(strLen==0)return -1;
+
+          while(i<strLen&&j<patternLen){
+
+               if(strChar[i]==patternChar[j]){
+                    if(j==patternLen-1){
+                         break;
+                    }else{
+                            ++i;++j;
+                    }
+               }else{
+                    i=i-j+1;j=0;
+               }
+          }
+          if(j==patternLen-1 && i<strLen ) return i-j;
+          else return -1;
+     }
+     
+     
+ 
