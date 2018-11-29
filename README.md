@@ -646,7 +646,7 @@ If source = "abcdabcdefg" and target = "bcd", return 1.
 Challenge
 O(n2) is acceptable. Can you implement an O(n) algorithm? (hint: KMP)
 		  
-### Solution
+### Solution 1:
 
     public  int strStr(String source, String target) {
           int strLen=source.length();
@@ -675,4 +675,54 @@ O(n2) is acceptable. Can you implement an O(n) algorithm? (hint: KMP)
      }
      
      
- 
+### Solution 2:
+
+     public  int strStr(String source, String target){
+		int i = 0;
+		int j = 0;
+		int sLen = source.length();
+		int pLen = target.length();
+		char[] s = source.toCharArray();
+		char[] p = target.toCharArray();
+		int next[] = new int[target.length()];
+		getNext(target,next);
+		while (i < sLen && j < pLen)
+		{
+			if (j == -1 || s[i] == p[j])
+			{
+				i++;
+				j++;
+			}
+			else
+			{     
+				j = next[j];
+			}
+		}
+		if (j == pLen)
+			return i - j;
+		else
+			return -1;
+	}
+
+	public static void getNext(String target,int next[])
+	{
+		int pLen = target.length();
+		char[] p = target.toCharArray();
+		next[0] = -1;
+		int k = -1;
+		int j = 0;
+		while (j < pLen - 1)
+		{
+			if (k == -1 || p[j] == p[k]) 
+			{
+				++k;
+				++j;
+				next[j] = k;
+			}
+			else 
+			{
+				k = next[k];
+			}
+		}
+	}
+
