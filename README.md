@@ -726,3 +726,35 @@ O(n2) is acceptable. Can you implement an O(n) algorithm? (hint: KMP)
 		}
 	}
 
+## 14. First Position of Target
+
+Description
+For a given sorted array (ascending order) and a target number, find the first index of this number in O(log n)timecomplexity.
+If the target number does not exist in the array, return -1.
+
+Example
+If the array is [1, 2, 3, 3, 4, 5, 10], for given target 3, return 2.
+
+Challenge
+If the count of numbers is bigger than 2^32, can your code work properly?
+
+### Solution :
+
+    public  int binarySearch(int[] nums ,int target){
+          int start = 0,mid=0;
+          int end =nums.length-1;
+          while(start<end){
+               mid = start+(end-start)/2;
+               if(nums[mid]<target){
+                    start=mid+1;
+               }else if(nums[mid]>target){
+                    end=mid-1;
+               }else if(nums[mid]==target){
+                    end=mid;
+               }
+          }
+          if(nums[start]==target)
+               return start;
+          else
+               return -1;
+        }
