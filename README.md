@@ -778,7 +778,7 @@ For nums = [1,2,3], the permutations are:
 Challenge
 Do it without recursion.
 
-### Solution :
+### Solution 1:
 
     public   List<List<Integer>> permute(int[] nums) {
         ArrayList<List<Integer>> permutations = new ArrayList<List<Integer>>();
@@ -830,4 +830,149 @@ Do it without recursion.
         
         return permutations;
     }
+    
+### Solution 2:
 
+    public static List<List<Integer>> permute1(int[] nums) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (nums == null) {
+            return results;
+        }
+        if (nums.length == 0) {
+            results.add(new ArrayList<Integer>());
+            return results;
+        }
+        
+        List<Integer> list = new ArrayList<>();
+        helper(nums, list, results);
+        return results;
+    }
+    
+    private static void helper(int[] nums,List<Integer> list,List<List<Integer>> results) {
+        if (list.size() == nums.length) {
+            results.add(new ArrayList<Integer>(list));
+            return;
+        }
+	
+        for (int i = 0; i < nums.length; i++) {
+            if (list.contains(nums[i])) {
+                continue;
+            }
+            list.add(nums[i]);
+            helper(nums, list, results);
+            list.remove(list.size() - 1);
+        }
+    }
+
+
+## 16. Permutations II
+
+Description
+Given a list of numbers with duplicate number in it. Find all unique permutations.
+Example
+For numbers [1,2,2] the unique permutations are:
+[
+  [1,2,2],
+  [2,1,2],
+  [2,2,1]
+]
+Challenge
+Using recursion to do it is acceptable. If you can do it without recursion, that would be great!
+
+### Solution 1:
+
+     public List<List<Integer>> permuteUnique(int[] nums) {
+        // Write your code here
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            result.add(list);
+            return result;
+        }
+        
+        Arrays.sort(nums);
+        
+        boolean[] visit = new boolean[nums.length];
+        search(nums, list, result, visit);
+        return result;
+    } 
+    
+    public void search( int[] nums, 
+                        List<Integer> list, 
+                        List<List<Integer>> result, 
+                        boolean[] visit) {
+        
+        if (list.size() == nums.length) {
+            result.add(new ArrayList<Integer>(list));
+            return;
+        }                    
+        
+        for (int i = 0; i < nums.length; i++) {
+            if (visit[i] || (i != 0 && !visit[i - 1] && nums[i] == nums[i - 1])) {
+                continue;
+            }
+            visit[i] = true;
+            list.add(nums[i]);
+            search(nums, list, result, visit);
+            list.remove(list.size() - 1);
+            visit[i] = false;
+        }
+        
+        return;
+    }
+    
+    
+### Solution 2:
+
+    public static List<List<Integer>> permuteUnique(int[] nums) {
+        ArrayList<List<Integer>> permutations = new ArrayList<List<Integer>>();
+        if (nums == null) {
+            
+            return permutations;
+        }
+
+        if (nums.length == 0) {
+            permutations.add(new ArrayList<Integer>());
+            return permutations;
+        }
+        
+        int n = nums.length;
+        ArrayList<Integer> stack = new ArrayList<Integer>();
+        
+        stack.add(-1);
+        while (stack.size() != 0) {
+            Integer last = stack.get(stack.size() - 1);
+            stack.remove(stack.size() - 1);
+            
+            // increase the last number
+            int next = -1;
+            for (int i = last + 1; i < n; i++) {
+                if (!stack.contains(i)) {
+                    next = i;
+                    break;
+                }
+            }
+            if (next == -1) {
+                continue;
+            }
+            
+            // generate the next permutation
+            stack.add(next);
+            for (int i = 0; i < n; i++) {
+                if (!stack.contains(i)) {
+                    stack.add(i);
+                }
+            }
+            
+            // copy to permutations set
+            ArrayList<Integer> permutation = new ArrayList<Integer>();
+            for (int i = 0; i < n; i++) {
+                permutation.add(nums[stack.get(i)]);
+            }
+            if(!permutations.contains(permutation)){
+                permutations.add(permutation);
+            }
+        }
+        
+        return permutations;
+    }
