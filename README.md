@@ -976,3 +976,75 @@ Using recursion to do it is acceptable. If you can do it without recursion, that
         
         return permutations;
     }
+    
+    
+## 17. Subsets
+
+Description
+Given a set of distinct integers, return all possible subsets
+Elements in a subset must be in non-descending order.
+The solution set must not contain duplicate subsets.
+
+Example 
+If S = [1,2,3], a solution is:
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]
+
+Challenge
+Can you do it in both recursively and iteratively?
+
+### Solution 1:
+
+public static ArrayList<ArrayList<Integer>> subsets(int[] nums) {
+
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> list = new ArrayList<Integer>();
+ 
+        if(nums == null || nums.length == 0){
+            return result;
+        }
+        Arrays.sort(nums);
+        helper(result, list, nums, 0);
+        return result;
+    }
+ 
+	public static void helper(ArrayList<ArrayList<Integer>> result, ArrayList<Integer> list, int[] nums, int pos){
+        result.add(new ArrayList<Integer>(list));
+        for(int i = pos; i < nums.length; i++){
+            list.add(nums[i]);
+            helper(result, list, nums, i+1);
+            list.remove(list.size()-1);
+        }
+    }
+	
+
+### Solution 2:
+
+	 public static ArrayList<ArrayList<Integer>> subsets(int[] nums) {
+	        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+	        if(nums == null || nums.length == 0){
+	            return result;
+	        }
+	 
+	        int n = nums.length;
+	        Arrays.sort(nums);
+	        for(int i = 0; i < (1 << n); i++){
+	            ArrayList<Integer> list = new ArrayList<Integer>();
+	            for(int j = 0; j < n; j++){
+	                if((i & (1 << j)) != 0){
+	                    list.add(nums[j]);
+	                }
+	            }
+	            result.add(list);
+	        }
+	 
+	        return result;
+	    }
