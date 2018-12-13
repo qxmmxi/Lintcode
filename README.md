@@ -1003,12 +1003,12 @@ Can you do it in both recursively and iteratively?
 
 ### Solution 1:
 
-public static ArrayList<ArrayList<Integer>> subsets(int[] nums) {
-
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> list = new ArrayList<Integer>();
+     public  List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> list = new ArrayList<Integer>();
  
         if(nums == null || nums.length == 0){
+            result.add(list);
             return result;
         }
         Arrays.sort(nums);
@@ -1016,7 +1016,7 @@ public static ArrayList<ArrayList<Integer>> subsets(int[] nums) {
         return result;
     }
  
-	public static void helper(ArrayList<ArrayList<Integer>> result, ArrayList<Integer> list, int[] nums, int pos){
+	public  void helper(List<List<Integer>> result, List<Integer> list, int[] nums, int pos){
         result.add(new ArrayList<Integer>(list));
         for(int i = pos; i < nums.length; i++){
             list.add(nums[i]);
@@ -1028,12 +1028,12 @@ public static ArrayList<ArrayList<Integer>> subsets(int[] nums) {
 
 ### Solution 2:
 
-	 public static ArrayList<ArrayList<Integer>> subsets(int[] nums) {
-	        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+	 public  List<List<Integer>> subsets(int[] nums) {
+		    List<List<Integer>> result = new ArrayList<List<Integer>>();
 	        if(nums == null || nums.length == 0){
+	        	result.add(new ArrayList<Integer>());
 	            return result;
 	        }
-	 
 	        int n = nums.length;
 	        Arrays.sort(nums);
 	        for(int i = 0; i < (1 << n); i++){
@@ -1045,6 +1045,5 @@ public static ArrayList<ArrayList<Integer>> subsets(int[] nums) {
 	            }
 	            result.add(list);
 	        }
-	 
 	        return result;
 	    }
