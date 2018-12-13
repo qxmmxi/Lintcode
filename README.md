@@ -1047,3 +1047,78 @@ Can you do it in both recursively and iteratively?
 	        }
 	        return result;
 	    }
+	    
+	   
+## 18. Subsets II
+
+Description
+Given a collection of integers that might contain duplicates, nums, return all possible subsets (the power set).
+Each element in a subset must be in non-descending order.
+The ordering between two subsets is free.
+The solution set must not contain duplicate subsets.
+
+Example
+Input: [1,2,2]
+Output:
+[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+Challenge
+Can you do it in both recursively and iteratively?
+
+
+### Solution 1:
+
+    public  List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> list = new ArrayList<Integer>();
+ 
+        if(nums == null || nums.length == 0){
+        	result.add(list);
+            return result;
+        }
+        Arrays.sort(nums);
+        helper(result, list, nums, 0);
+        return result;
+     }
+ 
+	public  void helper(List<List<Integer>> result, List<Integer> list, int[] nums, int pos){
+        result.add(new ArrayList<Integer>(list));
+        for(int i = pos; i < nums.length; i++){
+        	if(i!=pos&&nums[i]==nums[i-1]){
+        		continue;
+        	}
+            list.add(nums[i]);
+            helper(result, list, nums, i+1);
+            list.remove(list.size()-1);
+        }
+    }
+    
+### Solution 2:
+
+    public static List<List<Integer>> subsetsWithDup1(int[] nums) {
+		    List<List<Integer>> result = new ArrayList<List<Integer>>();
+	        if(nums == null || nums.length == 0){
+	        	result.add(new ArrayList<Integer>());
+	            return result;
+	        }
+	        int n = nums.length;
+	        Arrays.sort(nums);
+	        for(int i = 0; i < (1 << n); i++){
+	            ArrayList<Integer> list = new ArrayList<Integer>();
+	            for(int j = 0; j < n; j++){
+	                if((i & (1 << j)) != 0){
+	                    list.add(nums[j]);
+	                }
+	            }
+	            if(!result.contains(list)){
+	            	result.add(list);
+	            }
+	        }
+	        return result;
+	    }
