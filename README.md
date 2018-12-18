@@ -1144,22 +1144,18 @@ Given n = 1, return [ [1, 0.17], [2, 0.17], [3, 0.17], [4, 0.17], [5, 0.17], [6,
         if(n < 1){
             return result;
         }
-        //初始化n＝1的情况
         double[][] matrix = new double[n + 1][6 * n + 1];
         for(int i = 1; i <= 6; i++){
             matrix[1][i] = 1.0/6;
         }
 
         for(int i = 2; i <= n; i++){
-        //i个筛子至少得到i点，至多得到6 * i点
             for(int j = i; j <= 6 * i; j++){
-            //k表示最后一个筛子能取的点数
                 for(int k = 1; k <= 6; k++){
                     if(k <= j - i + 1){
                         matrix[i][j] += matrix[i - 1][j - k];
                     }
                 }
-                //相对i－1个筛子多了一个筛子，因此加和的每一项都要除以6
                 matrix[i][j] /= 6.0;
             }
         }
