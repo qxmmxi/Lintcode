@@ -1352,7 +1352,7 @@ Given target = 3, return true.
 Challenge
 O(log(n) + log(m)) time
 
-### solution:
+### solution 1:
 
       	public boolean searchMatrix(int[][] matrix, int target) { 
 		int m = matrix.length;         
@@ -1372,5 +1372,26 @@ O(log(n) + log(m)) time
 				}       
 			}         
 		return false;   
-	}
+	   }
+	
+	
+### solution 2:	
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if(matrix.length == 0){
+            return false;
+        }
+        int i = 0, j = matrix[0].length - 1;
+        while(i < matrix.length && j >= 0){
+            int curr = matrix[i][j];
+            if(curr == target){
+                return true;
+            } else if(curr > target){
+                j--;
+            } else {
+                i++;
+            }
+        }
+        return false;
+     }
 
