@@ -1429,3 +1429,48 @@ O(n2) time or better
         return dp[dp.length - 1][dp[0].length - 1];
     }
 
+
+
+## 30. Insert Interval
+
+Description
+
+Given a non-overlapping interval list which is sorted by start point.
+Insert a new interval into it, make sure the list is still in order and non-overlapping (merge intervals if necessary).
+
+Example
+Insert (2, 5) into [(1,2), (5,9)], we get [(1,9)].
+Insert (3, 4) into [(1,2), (5,9)], we get [(1,2), (3,4), (5,9)].
+
+
+### solution :
+
+     public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
+	        // write your code here
+	        List<Interval> ans = new ArrayList<>();
+
+	        int idx = 0;
+	        while (idx < intervals.size() && intervals.get(idx).start < newInterval.start) {
+	            idx++;
+	        }
+	        intervals.add(idx, newInterval);
+
+	        Interval last = null;
+	        for (Interval item : intervals) {
+	            if (last == null || last.end < item.start) {
+	                ans.add(item);
+	                last = item;
+	            } else {
+	                last.end = Math.max(last.end, item.end); // Modify the element already in list
+	            }
+	        }
+	        return ans;
+	    }
+	 
+	  class Interval {
+	   int start, end;
+	   Interval(int start, int end) {
+		  this.start = start;
+		  this.end = end;
+		 }
+	 }
