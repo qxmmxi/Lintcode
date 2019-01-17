@@ -1523,4 +1523,62 @@ Can you partition the array in-place and in O(n)?
 	    }
 
 
+## 32. Minimum Window Substring
+
+Description
+
+Given a string source and a string target, find the minimum window in source which will contain all the characters in target.
+
+If there is no such window in source that covers all characters in target, return the emtpy string "".
+If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in source.
+The target string may contain duplicate characters, the minimum window should cover all characters including the duplicate characters in target.
+Clarification
+
+Should the characters in minimum window has the same order in target?
+Not necessary.
+Example
+For source = "ADOBECODEBANC", target = "ABC", the minimum window is "BANC"
+Challenge
+Can you do it in time complexity O(n) ?
+
+
+
+    static int initTargetHash(int []targethash, String Target) {
+        int targetnum =0 ;
+        for (char ch : Target.toCharArray()) {
+            targetnum++;
+            targethash[ch]++;
+        }
+        return targetnum;
+    }
+    
+    public static String minWindow(String Source, String Target) {
+        int ans = Integer.MAX_VALUE;
+        String minStr = "";
+        
+        int[] targethash = new int[256];
+        
+        int targetnum = initTargetHash(targethash, Target);
+        int sourcenum = 0;
+        int j = 0, i = 0;
+        for(i = 0; i < Source.length(); i++) {
+            if(targethash[Source.charAt(i)] > 0)
+                sourcenum++;
+            
+            targethash[Source.charAt(i)]--;
+            while(sourcenum>=targetnum) {
+                if(ans > i - j + 1) {
+                    ans = Math.min(ans, i - j + 1);
+                    minStr = Source.substring(j, i + 1);
+                }
+                targethash[Source.charAt(j)]++;
+                if(targethash[Source.charAt(j)] > 0)
+                    sourcenum--;
+                j++;
+            }
+        }
+        return minStr;
+    }
+
+
 
